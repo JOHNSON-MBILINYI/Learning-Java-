@@ -1,0 +1,89 @@
+import java.util.*;
+
+class Student {
+    private int id;
+    private String name;
+    private int age;
+
+    public Student(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public int getAge() { return age; }
+
+    public void displayInfo() {
+        System.out.println("ID: " + id + ", Name: " + name + ", Age: " + age);
+    }
+}
+
+public class StudentManagementSystem {
+    private static List<Student> students = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        boolean running = true;
+
+        while (running) {
+            System.out.println("\n1. Add Student");
+            System.out.println("2. View All Students");
+            System.out.println("3. Search by ID");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1: addStudent(); break;
+                case 2: viewAllStudents(); break;
+                case 3: searchById(); break;
+                case 4: running = false; break;
+                default: System.out.println("Invalid choice!");
+            }
+        }
+    }
+
+    private static void addStudent() {
+        System.out.print("Enter ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter age: ");
+        int age = scanner.nextInt();
+
+        students.add(new Student(id, name, age));
+        System.out.println("Student added!");
+    }
+
+    private static void viewAllStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students found.");
+        } else {
+            for (Student s : students) {
+                s.displayInfo();
+            }
+        }
+    }
+
+    private static void searchById() {
+        System.out.print("Enter student ID: ");
+        int id = scanner.nextInt();
+
+        boolean found = false;
+        for (Student s : students) {
+            if (s.getId() == id) {
+                s.displayInfo();
+                found = true;
+                break;
+            }
+        }
+        if (!found) System.out.println("Student not found.");
+    }
+}
